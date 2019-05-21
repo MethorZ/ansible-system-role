@@ -1,0 +1,16 @@
+---
+##
+# Ansible system tasks
+##
+
+#
+# Import variable definitions and defaults
+#
+- name: IMPORT_TASKS | Setup Variable definitions / defaults
+  import_tasks: setup-variables.yml
+
+#
+# Setup the OS based on family
+#
+- name: IMPORT_TASKS | Setup system packages
+  import_tasks: setup-system-packages.yml

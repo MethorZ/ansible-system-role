@@ -1,0 +1,19 @@
+---
+#
+# Default packages for installation
+#
+__system_packages:
+  - sudo
+  - net-tools
+  - rsync
+  - mc
+  - curl
+  - wget
+  - pv
+  - make
+  - build-essential
+  - telnet
+  - git
+  - screen
+  - htop
+  - vim

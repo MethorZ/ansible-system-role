@@ -1,0 +1,16 @@
+---
+#
+# Default OS specific variable definitions / defaults
+#
+- name: INCLUDE_VARS | OS specific vars
+  include_vars: "{{ ansible_facts['os_family'] }}.yml"
+
+- name: FACTS - Define required system packages
+  set_fact:
+    system_packages: "{{ __system_packages | list }}"
+  when: system_packages is not defined
+
+- name: FACTS - Define additional system packages
+  set_fact:
+    system_packages: "{{ system_packages | list + system_additional_packages | list }}"
+  when: system_additional_packages is defined

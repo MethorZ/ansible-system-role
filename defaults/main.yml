@@ -1,0 +1,7 @@
+---
+
+# Install or update latest packages
+system_package_mode: latest # present
+
+# Additional packages to be installed on the systems
+system_additional_packages: []

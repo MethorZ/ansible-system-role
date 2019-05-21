@@ -1,0 +1,9 @@
+---
+##
+# System setup: basic packages
+##
+- name: APT | Installation for default system packages
+  apt:
+    name: "{{ system_packages }}"
+    state: "{{ system_package_mode }}"
+    update_cache: yes
