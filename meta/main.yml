@@ -1,6 +1,6 @@
 galaxy_info:
   author: MethorZ
-  description: Ansible bash improvements
+  description: Ansible base system setup role
   company: MethorZ
   license: license (BSD, MIT)
   min_ansible_version: 2.5
