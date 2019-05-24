@@ -17,3 +17,4 @@ __system_packages:
   - screen
   - htop
   - vim
+  - ntpdate
