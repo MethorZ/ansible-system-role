@@ -2,7 +2,7 @@
 system_defaults_enabled: false
 
 # Install or update latest packages
-system_package_mode: latest # present
+system_package_mode: present # present
 
 # Additional packages to be installed on the systems
 system_additional_packages: []
