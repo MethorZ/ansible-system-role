@@ -1,1 +1,6 @@
 ---
+# Updates grub
+- name: update grub
+  service:
+    name: nginx
+    state: reloaded

@@ -14,3 +14,8 @@
   set_fact:
     system_packages: "{{ system_packages | list + system_additional_packages | list }}"
   when: system_additional_packages is defined
+
+- name: FACTS - Define grub defaults file
+  set_fact:
+    system_grub_defaults_file: "{{ __system_grub_defaults_file }}"
+  when: system_grub_defaults_file is not defined

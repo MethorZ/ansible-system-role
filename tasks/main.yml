@@ -16,4 +16,11 @@
   - name: IMPORT_TASKS | Setup system packages
     import_tasks: setup-system-packages.yml
 
+  #
+  # Optimize grub
+  #
+  - name: IMPORT_TASKS | Optimize grub
+    import_tasks: optimize-grub.yml
+    when: system_optimize_grub
+
   when: system_defaults_enabled

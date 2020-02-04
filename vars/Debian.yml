@@ -18,3 +18,8 @@ __system_packages:
   - htop
   - vim
   - ntpdate
+
+#
+# Defaults file for grub
+#
+__system_grub_defaults_file: /etc/default/grub

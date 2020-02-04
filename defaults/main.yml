@@ -6,3 +6,9 @@ system_package_mode: present # present
 
 # Additional packages to be installed on the systems
 system_additional_packages: []
+
+# Apply the grub optimisations (elevate)
+system_optimize_grub: false
+
+# Grub elevator mode
+system_grub_elevator_mode: 'noop'
