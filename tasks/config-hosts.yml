@@ -1,0 +1,12 @@
+---
+##
+# Add entries to /etc/hosts
+# PROBLEM with lineinfile does not add if not exists. stupid thing
+##
+- name: LINEINFILE | Add entries to /etc/hosts
+  lineinfile:
+    path: "{{ system_grub_defaults_file }}"
+    regexp: '^GRUB_CMDLINE_LINUX='
+    line: "GRUB_CMDLINE_LINUX=\"elevator={{ system_grub_elevator_mode }}\""
+  with_items: "{{ system_etc_hosts }}"
+

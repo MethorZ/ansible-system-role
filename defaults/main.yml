@@ -12,3 +12,6 @@ system_optimize_grub: false
 
 # Grub elevator mode
 system_grub_elevator_mode: 'noop'
+
+# Add entries to /etc/hosts
+system_etc_hosts: []
