@@ -8,10 +8,10 @@
     state: "{{ system_package_mode }}"
     update_cache: yes
 
-- name: APT | Make sure python-pip is present
-  apt:
-    name: python-pip
-    state: present
+#- name: APT | Make sure python-pip is present
+#  apt:
+#    name: python-pip
+#    state: present
 
 - name: APT | Make sure python-setuptools is present
   apt:

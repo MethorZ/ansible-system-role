@@ -23,4 +23,10 @@
     import_tasks: optimize-grub.yml
     when: system_optimize_grub
 
+    #
+    # Config /etc/hosts
+    #
+  - name: IMPORT_TASKS | Add entries to /etc/hosts
+    import_tasks: config-hosts.yml
+
   when: system_defaults_enabled
