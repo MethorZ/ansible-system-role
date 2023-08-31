@@ -5,11 +5,6 @@
 - name: INCLUDE_VARS | OS specific vars
   include_vars: "{{ ansible_facts['os_family'] }}.yml"
 
-- name: FACTS - Define required system packages
-  set_fact:
-    system_packages: "{{ __system_packages | list }}"
-  when: system_packages is not defined
-
 - name: FACTS - Define additional system packages
   set_fact:
     system_packages: "{{ system_packages | list + system_additional_packages | list }}"
@@ -19,3 +14,23 @@
   set_fact:
     system_grub_defaults_file: "{{ __system_grub_defaults_file }}"
   when: system_grub_defaults_file is not defined
+
+- name: FACTS - Define fstab file
+  set_fact:
+    system_fstab_file: "{{ __system_fstab_file }}"
+  when: system_fstab_file is not defined
+
+- name: FACTS - Define systcl file
+  set_fact:
+    system_sysctl_file: "{{ __system_sysctl_file }}"
+  when: system_sysctl_file is not defined
+
+- name: FACTS - Define initramfs update command
+  set_fact:
+    system_initramfs_update_command: "{{ __system_initramfs_update_command }}"
+  when: system_initramfs_update_command is not defined
+
+- name: FACTS - Define initramfs resume file
+  set_fact:
+    system_initramfs_resume_file: "{{ __system_initramfs_resume_file }}"
+  when: system_initramfs_resume_file is not defined

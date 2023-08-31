@@ -1,18 +1,11 @@
 ---
 ##
 # Add entries to /etc/hosts
-# PROBLEM with lineinfile does not add if not exists. stupid thing
 ##
-#- name: LINEINFILE | Add entries to /etc/hosts
-#  lineinfile:
-#    state: present
-#    path: /etc/hosts
-#    line: "{{ item }}"
-#  with_items: "{{ system_etc_hosts }}"
-
-- name: LINEINFILE | Add entries to /etc/hosts
-  lineinfile:
-    path: "/etc/hosts"
-    regexp: '{{ item.host }}'
-    line: "{{ item.ip }}\t{{ item.host }}"
-  with_items: "{{ system_etc_hosts }}"
+- name: TEMPLATE | Generate /etc/hosts file
+  template:
+    src: etc-hosts.j2
+    dest: /etc/hosts
+    owner: root
+    group: root
+    mode: 0644

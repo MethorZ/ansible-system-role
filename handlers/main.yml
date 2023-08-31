@@ -1,6 +1,12 @@
 ---
-# Updates grub
-- name: update grub
-  service:
-    name: nginx
-    state: reloaded
+# Update the initramfs after changes
+- name: update initramfs
+  command: "{{ system_initramfs_update_command }}"
+  when:
+    - ansible_facts['virtualization_type'] != "systemd-nspawn"
+    - ansible_facts['virtualization_type'] != "lxc"
+    - ansible_facts['virtualization_type'] != "lxd"
+    - ansible_facts['virtualization_type'] != "podman"
+    - ansible_facts['virtualization_type'] != "docker"
+    - ansible_facts['virtualization_type'] != "systemd_container"
+    - ansible_facts['virtualization_type'] != "container"

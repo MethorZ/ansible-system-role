@@ -2,7 +2,6 @@
 ##
 # Ansible system tasks
 ##
-
 - block:
   #
   # Import variable definitions and defaults
@@ -17,16 +16,31 @@
     import_tasks: setup-system-packages.yml
 
   #
+  # Setup the OS for Docker
+  #
+  - name: IMPORT_TASKS | Setup docker
+    import_tasks: setup-docker.yml
+    when: system_docker_setup
+
+  #
   # Optimize grub
   #
   - name: IMPORT_TASKS | Optimize grub
     import_tasks: optimize-grub.yml
     when: system_optimize_grub
 
-    #
-    # Config /etc/hosts
-    #
+  #
+  # Config /etc/hosts
+  #
   - name: IMPORT_TASKS | Add entries to /etc/hosts
     import_tasks: config-hosts.yml
+    when: system_etc_hosts
+
+    #
+    # Disable swap
+    #
+  - name: IMPORT_TASKS | Disable swap on server
+    import_tasks: disable-swap.yml
+    when: system_swap_disable
 
   when: system_defaults_enabled

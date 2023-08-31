@@ -1,25 +1,14 @@
 ---
 #
-# Default packages for installation
-#
-__system_packages:
-  - sudo
-  - net-tools
-  - rsync
-  - mc
-  - curl
-  - wget
-  - pv
-  - make
-  - build-essential
-  - telnet
-  - git
-  - screen
-  - htop
-  - vim
-  - ntpdate
-
-#
-# Defaults file for grub
+# Defaults for Debian
 #
 __system_grub_defaults_file: /etc/default/grub
+
+__system_fstab_file: /etc/fstab
+
+__system_sysctl_file: /etc/sysctl.conf
+
+__system_initramfs_update_command: "update-initramfs -u -k all"
+
+__system_initramfs_resume_file: "/etc/initramfs-tools/conf.d/resume"
+

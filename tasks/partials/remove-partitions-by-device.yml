@@ -1,0 +1,59 @@
+---
+##
+# Remove a partition by device - /dev/xxx
+#
+# Only works with UUID's which should be everywhere currently
+##
+- name: SHELL | Search for UUID based on swap device name
+  shell: lsblk {{ device_path }} -no UUID
+  check_mode: false
+  changed_when: false
+  register: system_swap_uuid_search_result
+
+- name: SET_FACT | Create a list of swap device UUID's based on UUID search
+  set_fact:
+    system_swap_uuid_list: >-
+      {%- set r = [] -%}
+      {%- for line in system_swap_uuid_search_result.stdout_lines -%}
+      {%-   if line != "" -%}
+      {%-     set _ = r.append(line) -%}
+      {%-   endif -%}
+      {%- endfor -%}
+      {{ r }}
+
+- name: STAT | Examine the device path stat
+  stat:
+    path: "{{ device_path }}"
+    get_checksum: false
+  register: system_swap_device_stat
+
+- name: MOUNT | Permanently remove swap mount points
+  mount:
+    fstab: "{{ system_fstab_file }}"
+    path: none
+    src: "UUID={{ item }}"
+    state: absent
+  with_items: "{{ system_swap_uuid_list }}"
+  register: system_swap_mount_execution
+  when: system_swap_uuid_list | length > 0
+  notify:
+    - update initramfs
+
+- name: COMMAND | Disable active swap for session
+  command: "swapoff {{ device_path }}"
+
+- name: SET_FACT | Create a list of swap files for the device path
+  set_fact:
+    system_swap_device_file_list: >-
+      {%- set r = [] -%}
+      {%-   if system_swap_device_stat.stat.exists -%}
+      {%-     set _ = r.append(result.item) -%}
+      {%-   endif -%}
+      {{ r }}
+
+- name: FILE | Remove all swap files
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items: "{{ system_swap_device_file_list }}"
+  when: "{{ system_swap_remove_files }}"

@@ -1,0 +1,63 @@
+---
+##
+# Disable swap partitions
+##
+- name: SHELL | Search for all existing swap devices - /dev/xxx
+  shell: swapon -s | awk 'NR>=2{print $1}'
+  check_mode: false
+  changed_when: false
+  when: system_swap_devices_search_result is not defined
+  register: system_swap_devices_search_result
+
+- name: SET_FACT | Create a list of swap devices based on search result
+  set_fact:
+    system_swap_device_list: >-
+      {%- set r = [] -%}
+      {%- for line in system_swap_devices_search_result.stdout_lines -%}
+      {%-   if line != "" -%}
+      {%-     set _ = r.append(line) -%}
+      {%-   endif -%}
+      {%- endfor -%}
+      {{ r }}
+  when: system_swap_device_list is not defined
+
+# Loop through swap devices removing them one by one
+- include_tasks: partials/remove-partitions-by-device.yml
+  with_items: "{{ system_swap_device_list }}"
+  loop_control:
+    loop_var: device_path
+
+- name: SYSCTL | Disable swap setting vm.swappiness to 0
+  sysctl:
+    name: vm.swappiness
+    value: 0
+    sysctl_file: "{{ system_sysctl_file }}"
+
+- name: LINEINFILE | Set the RESUME for initramfs-tools to none - to really disable the swap
+  lineinfile:
+    path: "{{ system_initramfs_resume_file }}"
+    regexp: '^RESUME=UUID'
+    line: "RESUME=none"
+  when: system_swap_mount_execution.changed is defined and system_swap_mount_execution.changed
+  notify:
+    - update initramfs
+
+- name: REBOOT | Reboot the Server after modifying partition list
+  reboot:
+    msg: "Ansible has initiated a server REBOOT due to kernel updates!"
+    connect_timeout: 5
+    reboot_timeout: 300
+    pre_reboot_delay: 0
+    post_reboot_delay: 30
+    test_command: uptime
+  when: system_swap_mount_execution.changed is defined and system_swap_mount_execution.changed
+
+- name: DEBUG | Manual step required!
+  debug:
+    msg:
+      - "In order to finally remove the swap on some systems via checking existing services for swap with"
+      - "systemctl --type swap"
+      - "Then manually execute the mask command to redirect to /dev/null via"
+      - "systemctl mask dev-vdXX.swap"
+      - "Reboot the system once more to double check"
+  when: system_swap_mount_execution.changed is defined and system_swap_mount_execution.changed

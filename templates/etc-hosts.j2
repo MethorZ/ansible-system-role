@@ -1,0 +1,16 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; ANSIBLE MANAGED FILE - DO NOT TOUCH  ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+127.0.0.1       localhost
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+
+{% if system_etc_hosts_list is defined %}
+{% for entry in system_etc_hosts_list %}
+{{ entry.ip }}        {{ entry.host }}
+{% endfor %}
+{% endif %}

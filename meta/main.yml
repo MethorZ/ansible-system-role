@@ -1,5 +1,5 @@
 galaxy_info:
-  role_name: system
+  role_name: methorz.system
   author: MethorZ
   description: Ansible base system setup role
   company: MethorZ
