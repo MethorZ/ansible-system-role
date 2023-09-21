@@ -20,6 +20,8 @@ system_grub_elevator_mode: ""
 # Deploy etc hosts
 system_etc_hosts: false
 
+system_etc_hosts_self: ''
+
 # Add entries to /etc/hosts (note: will REPLACE the whole /etc/hosts file)
 system_etc_hosts_list: []
 # - host: example.tld

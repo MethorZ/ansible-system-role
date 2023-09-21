@@ -3,6 +3,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 127.0.0.1       localhost
+{% if system_etc_hosts_self is defined %}
+{{ system_etc_hosts_self }}
+{% endif %}
 
 # The following lines are desirable for IPv6 capable hosts
 ::1     localhost ip6-localhost ip6-loopback
