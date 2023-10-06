@@ -34,3 +34,13 @@
   set_fact:
     system_initramfs_resume_file: "{{ __system_initramfs_resume_file }}"
   when: system_initramfs_resume_file is not defined
+
+- name: FACTS - Define postfix package
+  set_fact:
+    system_postfix_package: "{{ __system_postfix_package }}"
+  when: system_postfix_package is not defined
+
+- name: FACTS - Define postfix main config file
+  set_fact:
+    system_postfix_main_config_file: "{{ __system_postfix_main_config_file }}"
+  when: system_postfix_main_config_file is not defined

@@ -10,3 +10,9 @@
     - ansible_facts['virtualization_type'] != "docker"
     - ansible_facts['virtualization_type'] != "systemd_container"
     - ansible_facts['virtualization_type'] != "container"
+
+# Restarts postfix
+- name: restart postfix
+  service:
+    name: postfix
+    state: restarted

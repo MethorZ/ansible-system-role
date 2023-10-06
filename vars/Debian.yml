@@ -12,3 +12,7 @@ __system_initramfs_update_command: "update-initramfs -u -k all"
 
 __system_initramfs_resume_file: "/etc/initramfs-tools/conf.d/resume"
 
+__system_postfix_package: postfix
+
+__system_postfix_main_config_file: /etc/postfix/main.cf
+

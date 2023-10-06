@@ -1,0 +1,26 @@
+---
+##
+# Setup postfix configuration
+##
+- name: APT | Installation for postfix package
+  apt:
+    name: "{{ system_postfix_package }}"
+    state: "{{ system_package_mode }}"
+    update_cache: yes
+  when:
+    - system_postfix
+
+- name: LINEINFILE | Set required postfix configuration
+  lineinfile:
+    dest: "{{ system_postfix_main_config_file }}"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  loop:
+    - { regexp: '^relayhost', line: "relayhost = {{ system_postfix_relay_host }}" }
+    - { regexp: '^inet_interfaces', line: "inet_interfaces = {{ system_postfix_inet_interfaces }}" }
+    - { regexp: '^inet_protocols', line: "inet_protocols = {{ system_postfix_inet_protocols }}" }
+    - { regexp: '^smtp_tls_security_level', line: "smtp_tls_security_level = {{ system_postfix_smtp_tls_security_level }}" }
+  when:
+    - system_postfix
+  notify:
+    - restart postfix

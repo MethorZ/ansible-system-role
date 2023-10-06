@@ -15,6 +15,14 @@
   - name: IMPORT_TASKS | Setup system packages
     import_tasks: setup-system-packages.yml
 
+
+  #
+  # Setup postfix
+  #
+  - name: IMPORT_TASKS | Set up postfix
+    import_tasks: setup-postfix.yml
+    when: system_postfix
+
   #
   # Setup the OS for Docker
   #

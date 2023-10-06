@@ -41,3 +41,20 @@ system_swap_disable: false
 
 # Remove swap files
 system_swap_remove_files: true
+
+##
+# Postfix configuration
+##
+system_postfix: false
+
+# Relay host
+system_postfix_relay_host: ''
+
+# Inet interfaces
+system_postfix_inet_interfaces: localhost
+
+# Inet protocols
+system_postfix_inet_protocols: all
+
+# Security level
+system_postfix_smtp_tls_security_level: may
